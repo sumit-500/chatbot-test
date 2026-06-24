@@ -25,12 +25,10 @@
         p {
             color: #666;
         }
-        /* Move the agent widget to the left side */
-        #jug-ai-agent-container,
-        [id*="jug-ai-agent"],
-        iframe[src*="agent"] {
+        /* Move the agent bubble to the left so it doesn't overlap the chat bubble (which stays bottom-right) */
+        #jug-agent-bubble {
             right: auto !important;
-            left: 20px !important;
+            left: 16px !important;
         }
     </style>
 </head>
@@ -42,29 +40,5 @@
 
     <script id="jug-ai-agent" src="https://app.jug.ai/agent.min.js" data-bot="794b6787-189b-48a8-936a-3c1b7221addb"></script>
     <script id="jug-ai-chat" src="https://app.jug.ai/chat.min.js" data-bot="cc63f2e4-4f86-4e2e-b56d-775d1696cfe1"></script>
-    <script>
-        // Move the agent widget to the left once it loads
-        function moveAgentToLeft() {
-            var allElements = document.querySelectorAll('body > div, body > iframe');
-            var moved = false;
-            allElements.forEach(function(el) {
-                if (el.style.position === 'fixed' && !moved && el.id !== 'jug-ai-chat' && !el.querySelector('#jug-ai-chat')) {
-                    el.style.right = 'auto';
-                    el.style.left = '20px';
-                    // Also move any child iframes
-                    var iframes = el.querySelectorAll('iframe');
-                    iframes.forEach(function(iframe) {
-                        iframe.style.right = 'auto';
-                        iframe.style.left = '20px';
-                    });
-                    moved = true;
-                }
-            });
-            if (!moved) {
-                setTimeout(moveAgentToLeft, 500);
-            }
-        }
-        setTimeout(moveAgentToLeft, 1000);
-    </script>
 </body>
 </html>
